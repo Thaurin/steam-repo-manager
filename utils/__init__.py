@@ -4,6 +4,7 @@ from pathlib import Path
 import requests
 
 movies_path = os.path.join(Path.home(), '.steam', 'root', 'config', 'uioverrides', 'movies')
+startup_file = "deck_startup.webm"
 library_path = "/home/sparrow/Desktop/library.js"
 
 
@@ -34,7 +35,7 @@ def download_video(_, url: str):
     print(f"Downloading {url}")
     clear_installed_videos()
     response = requests.get(url)
-    open(os.path.join(Path(movies_path), "deck_startup.webm"), "wb").write(response.content)
+    open(os.path.join(Path(movies_path), startup_file), "wb").write(response.content)
     override_default_length_library()
 
 

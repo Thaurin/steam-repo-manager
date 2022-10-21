@@ -33,9 +33,9 @@ class MainWindow(Gtk.Window):
         box.set_valign(Gtk.Align.START)
         box.set_orientation(Gtk.Orientation.VERTICAL)
 
-        self.head = Header()
+        self._head = Header()
         box.add(dummy_entry)
-        box.add(self.head)
+        box.add(self._head)
 
         root_scroll = Gtk.ScrolledWindow()
         root_scroll.add(box)
@@ -43,7 +43,7 @@ class MainWindow(Gtk.Window):
         self.add(root_scroll)
         self.connect("destroy", Gtk.main_quit)
         self.show_all()
-        self.head.hide()
+        self._head.hide()
 
         self.item_container = Gtk.Box()
         self.item_container.set_margin_top(GLOBAL_SPACING)
@@ -75,9 +75,13 @@ class MainWindow(Gtk.Window):
         # Get Videos in a new thread to prevent UI freeze
         threading.Thread(target=self.download_videos_async, daemon=True, kwargs={'page': 0}).start()
 
+    @property
+    def head(self):
+        return self._head
+
     def on_videos_downloaded(self, videos):
         self.spinner.stop()
-        self.head.show()  # Show clear video button
+        self._head.show()  # Show clear video button
         self.footer.show()  # Show credits
         for i in range(ceil(len(videos) / ROW_COUNT)):
             row = LibraryRow(

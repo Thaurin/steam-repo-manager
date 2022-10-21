@@ -3,6 +3,7 @@ from gi.repository import GLib, Gtk, GdkPixbuf, Pango
 from utils import download_video
 from ui.widgets.info_box import InfoBox
 from ui.widgets.playback_interface import PlaybackInterface
+from ui import ui
 
 GUTTER = 16
 IMAGE_RATIO = 1.6
@@ -14,6 +15,8 @@ class LibraryRow(Gtk.Box):
 
     def on_video_dl(_, __, url):
         download_video(_, url)
+        ui.MAIN_WINDOW.head.enable_play_installed_button(True)
+
         dialog = Gtk.MessageDialog(
             flags=0,
             message_type=Gtk.MessageType.INFO,

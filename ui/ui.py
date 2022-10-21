@@ -9,8 +9,9 @@ from gi.repository import Gtk, Gdk, Gst
 Gst.init(None)
 Gst.init_check(None)
 
+MAIN_WINDOW = None
 
 def build_ui():
     Gdk.threads_init()
-    MainWindow()
+    MAIN_WINDOW = MainWindow()
     Gtk.main()
